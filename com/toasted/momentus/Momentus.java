@@ -38,7 +38,7 @@ public class Momentus extends ApplicationAdapter{
 			currentScreen = new ScreenLevelEditor();
 		else 
 			currentScreen = new ScreenMainMenu();
-		
+		Gdx.input.setInputProcessor(currentScreen);
 	}
 	public static void setScreen(Screen newScreen){
 		nextScreen = newScreen;

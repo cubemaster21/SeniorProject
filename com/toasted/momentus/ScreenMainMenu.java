@@ -1,10 +1,10 @@
 package com.toasted.momentus;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class ScreenMainMenu extends Screen{
 
@@ -12,9 +12,10 @@ public class ScreenMainMenu extends Screen{
 	public ScreenMainMenu(){
 		super();
 		sure = new SpriteBatch();
+		sure.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
 		UIButton whatever= new UIButton(20,76);
 		uiElements.add(whatever);
-		Texture butimg = new Texture("prettypatties.png");//add this file
+		Texture butimg = new Texture("plat.png");//add this file
 		TextureRegion paintedmeat = new TextureRegion(butimg);
 		whatever.setimg(paintedmeat);
 		whatever.setaction(new UIAction(){
@@ -26,7 +27,7 @@ public class ScreenMainMenu extends Screen{
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 
@@ -55,8 +56,9 @@ public class ScreenMainMenu extends Screen{
 
 	@Override
 	public Vector2 unprojectScreenCoords(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
+		Vector3 v = new Vector3(x, y, 0);
+		v = Momentus.cam.unproject(v);
+		return new Vector2(v.x, v.y);
 	}
 
 }
