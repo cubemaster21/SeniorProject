@@ -13,6 +13,15 @@ public class Momentus extends ApplicationAdapter{
 	private static Screen currentScreen, nextScreen;
 	public static OrthographicCamera cam;
 	float scale = 128;
+	boolean gameTest = false;
+	
+	public Momentus(boolean gameTest){
+		//only called by Eddie's implementation
+		this.gameTest = gameTest;
+	}
+	public Momentus(){}
+	
+	
 	@Override
 	public void create () {
 		Gdx.input.setCatchBackKey(true);
@@ -25,7 +34,10 @@ public class Momentus extends ApplicationAdapter{
 		cam = new OrthographicCamera(9 * scale, 16 * scale);
 		cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2, 0);
 		cam.update();
-		currentScreen = new ScreenLevelEditor();
+		if(gameTest)
+			currentScreen = new ScreenLevelEditor();
+		else 
+			currentScreen = new ScreenMainMenu();
 		
 	}
 	public static void setScreen(Screen newScreen){
