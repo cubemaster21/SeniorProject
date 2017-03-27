@@ -17,7 +17,12 @@ public abstract class Screen implements InputProcessor{
 	public boolean touchDown(int x, int y, int pointer, int button){
 		Vector2 unproj = unprojectScreenCoords(x, y);
 		for(UIObject uio: uiElements){
-			if(uio.contains(unproj.x, unproj.y)) return true;
+			if(uio.contains(unproj.x, unproj.y)){
+				if(uio instanceof UIButton){
+					((UIButton)uio).onClick();
+				}
+				return true;
+			}
 		}
 		
 		return false;
