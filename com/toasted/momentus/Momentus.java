@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Momentus extends ApplicationAdapter{
 	public static BitmapFont font;
 	public static BitmapFont hitFont;
+	public static BitmapFont opfont;
 	private static Screen currentScreen, nextScreen;
 	public static OrthographicCamera cam;
 	float scale = 128;
@@ -31,6 +32,9 @@ public class Momentus extends ApplicationAdapter{
 		
 		hitFont = new BitmapFont(Gdx.files.internal("boxy.fnt"), Gdx.files.internal("boxy.png"), false);
 		hitFont.getData().setScale(scale / 18);
+		
+		opfont = new BitmapFont(Gdx.files.internal("boxy.fnt"), Gdx.files.internal("boxy.png"), false);
+		opfont.getData().setScale(scale / 42);
 		
 		cam = new OrthographicCamera(9 * scale, 16 * scale);
 		cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2, 0);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public abstract class UIObject {
 	public float x, y, w, h;
 	public TextureRegion img;
+	public float cntr = (float) 2.25;
 	public UIObject(float x, float y, float w, float h){
 		this.x = x;
 		this.y = y;

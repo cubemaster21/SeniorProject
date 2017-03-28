@@ -13,10 +13,11 @@ public class ScreenMainMenu extends Screen{
 		super();
 		mscreen = new SpriteBatch();
 		mscreen.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
-		UIButton opbutt= new UIButton(20,76);
+		UIButton opbutt= new UIButton(976,1872);
 		uiElements.add(opbutt);
-		Texture butimg = new Texture("plat.png");//add this file
-		TextureRegion paintedmeat = new TextureRegion(butimg);
+		Texture oimg = new Texture("options.png");//add this file
+		TextureRegion paintedmeat = new TextureRegion(oimg);
+		opbutt.setbuttext("Options");
 		opbutt.setimg(paintedmeat);
 		opbutt.setaction(new UIAction(){
 			public void doAction(){

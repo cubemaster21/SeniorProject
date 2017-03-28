@@ -16,8 +16,8 @@ public class ScreenOptions extends Screen {
 		opscreen.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
 		UIButton gohome= new UIButton(300,76);
 		uiElements.add(gohome);
-		Texture butimg = new Texture("plat.png");//add this file
-		TextureRegion paintedmeat = new TextureRegion(butimg);
+		Texture himg = new Texture("plat.png");//add this file
+		TextureRegion paintedmeat = new TextureRegion(himg);
 		gohome.setimg(paintedmeat);
 		gohome.setaction(new UIAction(){
 			public void doAction(){

@@ -1,5 +1,6 @@
 package com.toasted.momentus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -15,8 +16,9 @@ public class UIButton extends UIObject {
 
 	@Override
 	public void draw(SpriteBatch b) {
-		// TODO Auto-generated method stub
 		b.draw(img, x, y);
+		//Momentus.opfont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		//Momentus.opfont.draw(b,buttext, x, y+(img.getRegionHeight()/2));
 	}
 	
 	public TextureRegion getimg(){
