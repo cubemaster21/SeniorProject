@@ -18,6 +18,7 @@ public class ScreenOptions extends Screen {
 		uiElements.add(gohome);
 		Texture himg = new Texture("plat.png");//add this file
 		TextureRegion paintedmeat = new TextureRegion(himg);
+		gohome.setbuttext("Main Menu");
 		gohome.setimg(paintedmeat);
 		gohome.setaction(new UIAction(){
 			public void doAction(){

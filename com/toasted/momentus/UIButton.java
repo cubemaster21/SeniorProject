@@ -1,13 +1,20 @@
 package com.toasted.momentus;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Align;
 
 public class UIButton extends UIObject {
 
 	private static final UIAction NULL = null;
+	//public static final Color WHITE = new Color();
+	//public static final int center = 1 << 0;
 	String buttext;
+	//public GlyphLayout layout = new GlyphLayout(Momentus.opfont, buttext, WHITE, 128, center, false);
+	//final float fontX = x + (w - layout.width)/2;
+	//final float fontY = x + (h - layout.height)/2;
 	UIAction action;
 	public UIButton(float x, float y) {
 		super(x, y, 0, 0);
@@ -17,8 +24,9 @@ public class UIButton extends UIObject {
 	@Override
 	public void draw(SpriteBatch b) {
 		b.draw(img, x, y);
-		//Momentus.opfont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		//Momentus.opfont.draw(b,buttext, x, y+(img.getRegionHeight()/2));
+		if (buttext != null){
+		Momentus.opfont.draw(b, buttext, x, y);
+		}
 	}
 	
 	public TextureRegion getimg(){
