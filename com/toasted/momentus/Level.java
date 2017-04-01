@@ -30,6 +30,9 @@ public class Level {
 	ArrayList<Effect> effects; // Just a reference to the ScreenGame variable's arrayList. Set by screengame
 	ArrayList<PhysObj> deletedObjects = new ArrayList<PhysObj>();
 	
+	int score;
+	float timeLeft = 30;
+	
 	public Level(){
 		ball = new Texture("circle.png");
 		plat = new Texture("plat.png");
@@ -56,7 +59,7 @@ public class Level {
 				}
 //				platform.getSprite().setColor(Color.GOLD);
 				platform.hit();
-				
+				score++;
 				if(effects != null)
 					effects.add(new EffectTextShine("+1", platform.getPosition().x * Constants.scale, platform.getPosition().y * Constants.scale, 1f));
 			}
@@ -110,12 +113,14 @@ public class Level {
 			o.applyProperties(del.getPropertiesID());
 			//set other properties
 		}
+		deletedObjects.clear();
 		for(PhysObj obj: objects){
 			obj.resetHits();
 			obj.setPosition(obj.getInitialPosition());
 			obj.getBody().setLinearVelocity(0, 0);
 		}
-		
+		score = 0;
+		timeLeft = 30;
 		
 	}
 	public void spawnBall(){
@@ -126,18 +131,22 @@ public class Level {
 		Body body = world.createBody(bodyDef);
 		body.setSleepingAllowed(false);
 		
-		CircleShape circle = new CircleShape();
-		circle.setRadius(.5f);
+//		CircleShape circle = new CircleShape();
+//		circle.setRadius(.5f);
+		
+		PolygonShape polygon = new PolygonShape();
+		polygon.setAsBox(.5f, .5f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = circle;
+		fixtureDef.shape = polygon;
 		fixtureDef.density = 1f;
 		fixtureDef.friction = .5f;
 		fixtureDef.restitution = .1f;
 		
 		Fixture fixture = body.createFixture(fixtureDef);
 		
-		circle.dispose();
+//		circle.dispose();
+		polygon.dispose();
 		ballObj = new PhysObj(body, bodyDef, fixture);
 		ballObj.setSprite(new Sprite(ball));
 		objects.add(ballObj);
@@ -148,13 +157,13 @@ public class Level {
 		world.setGravity(gravity);
 		world.step(delta, 6, 2);
 		syncObjects();
-		
+		timeLeft -= delta;
 	}
 	public void syncObjects(){
 		for(int i = 0;i < objects.size();i++){
 			if(objects.get(i).isFlaggedForRemoval()){
 				world.destroyBody(objects.get(i).getBody());
-				objects.get(i).destroy();
+				objects.get(i).destroy(this);
 				if(objects.get(i).keepInHistory())
 					deletedObjects.add(objects.get(i));
 				objects.remove(i--);

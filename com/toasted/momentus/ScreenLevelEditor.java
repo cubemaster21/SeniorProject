@@ -81,45 +81,25 @@ public class ScreenLevelEditor extends Screen{
 		if(rotateMode) rotateMode = false;
 		Vector3 v = physCam.unproject(new Vector3(screenX, screenY, 0));
 		Vector3 v2 = Momentus.cam.unproject(new Vector3(screenX, screenY, 0));
-		
-		if(drawerExpanded && drawerExpandedRect.contains(v2.x, v2.y)){
+		if(!drawerExpanded && drawerRect.contains(v2.x, v2.y) && objectFocus != null){
+			//an object is dragged into the unexpanded drawer
+			objectFocus.flagForRemoval();
+			objectFocus.setKeepInHistory(false);
+			System.out.println("deleted object");
+		} else if(drawerExpanded && drawerExpandedRect.contains(v2.x, v2.y)){
 			if(objectFocus != null){
 				//didn't drag out of drawer
 				objectFocus.setPosition(objectFocus.getInitialPosition());
 			}
 		} else if(drawerExpanded && !drawerExpandedRect.contains(v2.x, v2.y)){
-			drawerExpanded = false;
-			objectFocus.resetInitialPosition();
-			objectFocus.setKeepInHistory(true);
-			for(PhysObj obj: drawerIcons){
-				if(obj != objectFocus)
-					obj.flagForRemoval();
-			}
-			drawerIcons.clear();
-		}
-		if(drawerRect.contains(v2.x, v2.y)){
-			drawerExpanded = true;
-			//basic
-			PhysObj icon1 = level.addBox(2.3f, 1.25f, 2, .5f);
-			//Ice
-			PhysObj icon2 = level.addBox(icon1.getPosition().x + 1.3f, 1.25f, 2, .5f);
-			icon2.applyProperties(2);
-			//Bouncy
-			PhysObj icon3 = level.addBox(icon2.getPosition().x + 1.3f, 1.25f, 2, .5f);
-			icon3.applyProperties(3);
+			closeDrawer();
+		} else if(drawerRect.contains(v2.x, v2.y)){
+			openDrawer();
 			
-			icon1.setKeepInHistory(false);
-			icon2.setKeepInHistory(false);
-			icon3.setKeepInHistory(false);
-			
-			drawerIcons.add(icon1);
-			drawerIcons.add(icon2);
-			drawerIcons.add(icon3);
-			
-		}
-		if(!drawerExpanded && playRect.contains(v2.x, v2.y)){
+		} else if(!drawerExpanded && playRect.contains(v2.x, v2.y)){
 			Momentus.setScreen(new ScreenGame(level));
 		} 
+		
 		if((System.currentTimeMillis() - touchStartTime) / 1000.0f > Constants.longTouchDuration && !dragged){
 			
 			//engage rotation mode?
@@ -135,7 +115,42 @@ public class ScreenLevelEditor extends Screen{
 		
 		return false;
 	}
-
+	public void closeDrawer(){
+		drawerExpanded = false;
+		if(objectFocus != null){
+			objectFocus.resetInitialPosition();
+			objectFocus.setKeepInHistory(true);
+		}
+		for(PhysObj obj: drawerIcons){
+			if(obj != objectFocus)
+				obj.flagForRemoval();
+		}
+		drawerIcons.clear();
+	}
+	public void openDrawer(){
+		drawerExpanded = true;
+		//basic
+		PhysObj icon1 = level.addBox(2.3f, 1.25f, 2, .5f);
+		//Ice
+		PhysObj icon2 = level.addBox(icon1.getPosition().x + 1.3f, 1.25f, 2, .5f);
+		icon2.applyProperties(2);
+		//Bouncy
+		PhysObj icon3 = level.addBox(icon2.getPosition().x + 1.3f, 1.25f, 2, .5f);
+		icon3.applyProperties(3);
+		
+		PhysObj icon4 = level.addBox(icon1.getPosition().x - 1, .57f, 2, .5f);
+		icon4.applyProperties(4);
+		
+		icon1.setKeepInHistory(false);
+		icon2.setKeepInHistory(false);
+		icon3.setKeepInHistory(false);
+		icon4.setKeepInHistory(false);
+		
+		drawerIcons.add(icon1);
+		drawerIcons.add(icon2);
+		drawerIcons.add(icon3);
+		drawerIcons.add(icon4);
+	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 

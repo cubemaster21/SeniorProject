@@ -24,6 +24,7 @@ public class Momentus extends ApplicationAdapter{
 	
 	@Override
 	public void create () {
+		Art.init();
 		Gdx.input.setCatchBackKey(true);
 		font = new BitmapFont(Gdx.files.internal("boxy.fnt"), Gdx.files.internal("boxy.png"), false);
 		font.getData().setScale(scale / 10);

@@ -5,4 +5,5 @@ public class Constants {
 							  longTouchDuration = 1f;
 	public static final float movementError = 20;
 	public static final float scale = 128;
+	
 }

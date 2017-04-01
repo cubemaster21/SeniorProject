@@ -1,5 +1,7 @@
 package com.toasted.momentus;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -67,7 +69,10 @@ public class PhysObj {
 		return initialPosition;
 	}
 	public void resetInitialPosition(){
-		initialPosition.set(getPosition());
+		if(initialPosition != null)
+			initialPosition.set(getPosition());
+		else
+			initialPosition = new Vector2(getPosition());
 	}
 	public void flagForRemoval(){
 		flaggedForRemoval = true;
@@ -103,9 +108,9 @@ public class PhysObj {
 		this.maxHits = maxHits;
 	}
 	
-	public void destroy() {
+	public void destroy(Level l) {
 		if(destroyAction != null){
-			destroyAction.onDestroy();
+			destroyAction.onDestroy(l, this);
 		}
 	}
 	public void setDestroyAction(DestroyAction destroyAction) {
@@ -120,7 +125,7 @@ public class PhysObj {
 	}
 
 	public static interface DestroyAction{
-		public void onDestroy();
+		public void onDestroy(Level l, PhysObj obj);
 	}
 	public void applyProperties(int id){
 		propertiesID = id;
@@ -132,11 +137,31 @@ public class PhysObj {
 			//Ice
 			sprite.setColor(Color.BLUE);
 			setMaxHits(4);
+			destroyAction = new DestroyAction(){
+				public void onDestroy(Level l, PhysObj obj){
+					if(l.effects == null) return;
+					for(int i = 0;i < 8;i++){
+						
+						Random r = new Random();
+						EffectShatterParticle newParticle = new EffectShatterParticle(Art.snowflake, 
+										new Vector2(obj.getPosition().x * Constants.scale + (r.nextFloat() * 256) - 128, obj.getPosition().y * Constants.scale + (r.nextFloat() * 256) - 128),
+										new Vector2(r.nextFloat() * Constants.scale * 2, r.nextFloat() * Constants.scale * 2),
+										Constants.PI * r.nextFloat(),
+										r.nextFloat() * 1.5f);
+						l.effects.add(newParticle);
+					}
+				}
+			};
 			break;
 		case 3:
 			//bouncy
 			sprite.setColor(Color.PINK);
 			fixture.setRestitution(1.3f);
+			break;
+		case 4:
+			//stick?
+			sprite.setColor(Color.GREEN);
+			fixture.setFriction(.75f);
 			break;
 		}
 	}

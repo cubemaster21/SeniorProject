@@ -8,13 +8,10 @@ import com.badlogic.gdx.utils.Align;
 
 public class UIButton extends UIObject {
 
-	private static final UIAction NULL = null;
-	//public static final Color WHITE = new Color();
-	//public static final int center = 1 << 0;
 	String buttext;
-	//public GlyphLayout layout = new GlyphLayout(Momentus.opfont, buttext, WHITE, 128, center, false);
-	//final float fontX = x + (w - layout.width)/2;
-	//final float fontY = x + (h - layout.height)/2;
+	public GlyphLayout layout = new GlyphLayout();
+//	final float fontX = x + (w - layout.width)/2;
+//	final float fontY = x + (h - layout.height)/2;
 	UIAction action;
 	public UIButton(float x, float y) {
 		super(x, y, 0, 0);
@@ -25,7 +22,8 @@ public class UIButton extends UIObject {
 	public void draw(SpriteBatch b) {
 		b.draw(img, x, y);
 		if (buttext != null){
-		Momentus.opfont.draw(b, buttext, x, y);
+			layout.setText(Momentus.opfont, buttext);
+			Momentus.opfont.draw(b, buttext, x + w / 2 - layout.width / 2, y + h / 2 - layout.height / 2);
 		}
 	}
 	
@@ -56,7 +54,7 @@ public class UIButton extends UIObject {
 	}
 	
 	public void onClick(){
-		if (action != NULL){
+		if (action != null){
 			action.doAction();
 		}
 	}

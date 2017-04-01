@@ -1,31 +1,16 @@
 package com.toasted.momentus;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class ScreenGame extends Screen{
 	SpriteBatch batch;
@@ -38,6 +23,9 @@ public class ScreenGame extends Screen{
 	
 	ArrayList<Effect> effects = new ArrayList<Effect>();
 	Level level;
+	
+	
+	
 	public ScreenGame(Level l){
 		this.level = l;
 		Gdx.input.setInputProcessor(this);
@@ -79,7 +67,9 @@ public class ScreenGame extends Screen{
 			}
 			effects.get(i).update(delta);
 		}
-		
+		if(level.timeLeft <= 0){
+			returnToLevelEditor();
+		}
 	}
 
 	@Override
@@ -92,7 +82,12 @@ public class ScreenGame extends Screen{
 		//draw level
 		level.draw(batch);
 		
+		GlyphLayout scoreLayout = new GlyphLayout();
+		scoreLayout.setText(Momentus.font, "" + level.score);
+		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 1.2f * scoreLayout.height);
 		
+		scoreLayout.setText(Momentus.font, "" + (int)level.timeLeft);
+		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, 0.2f * scoreLayout.height);
 		for(Effect e: effects){
 			e.draw(batch);
 		}
@@ -113,11 +108,14 @@ public class ScreenGame extends Screen{
 	}
 	public boolean keyUp(int keycode){
 		if(keycode == Keys.BACK || keycode == Keys.BACKSPACE){
-			level.reset();
-			effects.clear();
-			level.resetEffectsManager();
-			Momentus.setScreen(new ScreenLevelEditor(level));
+			returnToLevelEditor();
 		}
 		return false;
+	}
+	public void returnToLevelEditor(){
+		level.reset();
+		effects.clear();
+		level.resetEffectsManager();
+		Momentus.setScreen(new ScreenLevelEditor(level));
 	}
 }
