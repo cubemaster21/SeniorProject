@@ -2,6 +2,7 @@ package com.toasted.momentus;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,13 +27,17 @@ public class Momentus extends ApplicationAdapter{
 	public void create () {
 		Art.init();
 		Gdx.input.setCatchBackKey(true);
-		font = new BitmapFont(Gdx.files.internal("boxy.fnt"), Gdx.files.internal("boxy.png"), false);
+		
+		FileHandle fntFile = Gdx.files.internal("boxy.fnt");
+		FileHandle pngFile = Gdx.files.internal("boxy.png");
+		
+		font = new BitmapFont(fntFile, pngFile, false);
 		font.getData().setScale(scale / 10);
 		
-		hitFont = new BitmapFont(Gdx.files.internal("boxy.fnt"), Gdx.files.internal("boxy.png"), false);
+		hitFont = new BitmapFont(fntFile, pngFile, false);
 		hitFont.getData().setScale(scale / 18);
 		
-		opfont = new BitmapFont(Gdx.files.internal("boxy.fnt"), Gdx.files.internal("boxy.png"), false);
+		opfont = new BitmapFont(fntFile, pngFile, false);
 		opfont.getData().setScale(scale / 42);
 		
 		cam = new OrthographicCamera(9 * scale, 16 * scale);
@@ -53,6 +58,7 @@ public class Momentus extends ApplicationAdapter{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		currentScreen.draw();
+//		System.out.println("FPS:" + Gdx.graphics.getFramesPerSecond());
 		
 		if(nextScreen != null){
 			currentScreen = nextScreen;

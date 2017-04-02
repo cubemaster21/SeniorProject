@@ -3,6 +3,7 @@ package com.toasted.momentus;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -109,7 +110,8 @@ public class Level {
 			
 			del.updateDefinition();
 			PhysObj o = addBox(del.getPosition().x - 1, del.getPosition().y - .25f, 2, .5f);
-			o.setAngle(del.getAngle());
+			o.setAngle(del.getInitialRotation());
+			o.resetInitalRotation();
 			o.applyProperties(del.getPropertiesID());
 			//set other properties
 		}
@@ -117,6 +119,7 @@ public class Level {
 		for(PhysObj obj: objects){
 			obj.resetHits();
 			obj.setPosition(obj.getInitialPosition());
+			obj.setAngle(obj.getInitialRotation());
 			obj.getBody().setLinearVelocity(0, 0);
 		}
 		score = 0;
@@ -131,22 +134,23 @@ public class Level {
 		Body body = world.createBody(bodyDef);
 		body.setSleepingAllowed(false);
 		
-//		CircleShape circle = new CircleShape();
-//		circle.setRadius(.5f);
+		CircleShape circle = new CircleShape();
+		circle.setRadius(.5f);
 		
-		PolygonShape polygon = new PolygonShape();
-		polygon.setAsBox(.5f, .5f);
+//		PolygonShape polygon = new PolygonShape();
+//		polygon.setAsBox(.5f, .5f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = polygon;
+//		fixtureDef.shape = polygon;
+		fixtureDef.shape = circle;
 		fixtureDef.density = 1f;
 		fixtureDef.friction = .5f;
 		fixtureDef.restitution = .1f;
 		
 		Fixture fixture = body.createFixture(fixtureDef);
 		
-//		circle.dispose();
-		polygon.dispose();
+		circle.dispose();
+//		polygon.dispose();
 		ballObj = new PhysObj(body, bodyDef, fixture);
 		ballObj.setSprite(new Sprite(ball));
 		objects.add(ballObj);
@@ -156,10 +160,10 @@ public class Level {
 		gravity.rotateRad(-Gdx.input.getGyroscopeZ() * Gdx.graphics.getDeltaTime());
 		world.setGravity(gravity);
 		world.step(delta, 6, 2);
-		syncObjects();
+		syncObjects(delta);
 		timeLeft -= delta;
 	}
-	public void syncObjects(){
+	public void syncObjects(float delta){
 		for(int i = 0;i < objects.size();i++){
 			if(objects.get(i).isFlaggedForRemoval()){
 				world.destroyBody(objects.get(i).getBody());
@@ -171,9 +175,9 @@ public class Level {
 				continue;
 			}
 			PhysObj obj = objects.get(i);
-			obj.sync();
+			obj.sync(delta);
 		}
-		ballObj.sync();	
+		ballObj.sync(delta);	
 	}
 	public void draw(SpriteBatch batch){
 		for(PhysObj obj: objects){
@@ -208,5 +212,31 @@ public class Level {
 	}
 	public void resetEffectsManager(){
 		effects = null;
+	}
+	public void compile(FileHandle file){
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0;i < objects.size();i++){
+			PhysObj po = objects.get(i);
+			if(po.equals(ballObj)){
+				sb.append("ball|");
+			}
+			sb.append(po.toString());
+			if(i < objects.size() - 1){
+				sb.append("\n");
+			}
+		}
+		file.writeString(sb.toString(), false);
+	}
+	public void build(FileHandle file){
+		String contents = file.readString();
+		String[] lines = contents.split("\n");
+		for(String line: lines){
+			String[] fSplit = line.split("\\|");
+			if(fSplit[0].equals("ball")){
+				ballObj.setFromString(fSplit[1]);
+			} else {
+				addBox(0,0,2, .5f).setFromString(fSplit[0]);
+			}
+		}
 	}
 }

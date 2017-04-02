@@ -24,7 +24,7 @@ public class ScreenGame extends Screen{
 	ArrayList<Effect> effects = new ArrayList<Effect>();
 	Level level;
 	
-	
+	boolean skipNextUpdate = false;
 	
 	public ScreenGame(Level l){
 		this.level = l;
@@ -58,6 +58,10 @@ public class ScreenGame extends Screen{
 	public void update(float delta) {
 		// TODO Auto-generated method stub
 		//update level
+		if(skipNextUpdate){
+			skipNextUpdate = false;
+			return;
+		}
 		level.update(delta);
 		for(int i = 0;i < effects.size();i++){
 			if(!effects.get(i).alive){
@@ -117,5 +121,6 @@ public class ScreenGame extends Screen{
 		effects.clear();
 		level.resetEffectsManager();
 		Momentus.setScreen(new ScreenLevelEditor(level));
+		skipNextUpdate = true;
 	}
 }

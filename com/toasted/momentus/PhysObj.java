@@ -18,10 +18,14 @@ public class PhysObj {
 	private boolean flaggedForRemoval = false;
 	private boolean keepInHistory = true;
 	private Vector2 initialPosition;
+	private float initialRotation = 0;
 	private int hits;
 	private int maxHits = -1;
 	private DestroyAction destroyAction;
 	private int propertiesID = 0;
+	private float rotationSpeed = 0; // 0 is no rotation, 1 is 1 full rotation/second
+	
+	
 	public PhysObj(Body body, BodyDef def, Fixture fixture){
 		this.body = body;
 		this.def = def;
@@ -33,7 +37,8 @@ public class PhysObj {
 		def.position.set(getPosition());
 		def.angle = getAngle();
 	}
-	public void sync(){
+	public void sync(float delta){
+		this.setAngle(getAngle() + delta * rotationSpeed * Constants.PI * 2);
 		sprite.setCenter(body.getPosition().x * Constants.scale, body.getPosition().y * Constants.scale);
 		sprite.setRotation((float)Math.toDegrees(body.getAngle()));
 	}
@@ -73,6 +78,12 @@ public class PhysObj {
 			initialPosition.set(getPosition());
 		else
 			initialPosition = new Vector2(getPosition());
+	}
+	public float getInitialRotation(){
+		return initialRotation;
+	}
+	public void resetInitalRotation(){
+		initialRotation = getAngle();
 	}
 	public void flagForRemoval(){
 		flaggedForRemoval = true;
@@ -161,7 +172,7 @@ public class PhysObj {
 		case 4:
 			//stick?
 			sprite.setColor(Color.GREEN);
-			fixture.setFriction(.75f);
+			rotationSpeed = .5f;
 			break;
 		}
 	}
@@ -171,4 +182,29 @@ public class PhysObj {
 	public void setPropertiesID(int propertiesID) {
 		this.propertiesID = propertiesID;
 	}
+	public String toString(){
+		//ix, iy, ir, maxHits, rotSpeed, propertiesID
+		return initialPosition.x + ":" +
+				initialPosition.y + ":" + 
+				initialRotation + ":" + 
+				maxHits + ":" +
+				rotationSpeed + ":" + 
+				propertiesID;
+	}
+	public void setFromString(String data){
+		String[] splitData = data.split(":");
+		this.setPosition(Float.parseFloat(splitData[0]), Float.parseFloat(splitData[1]));
+		this.resetInitalRotation();
+		
+		this.setAngle(Float.parseFloat(splitData[2]));
+		this.resetInitalRotation();
+		
+		this.setMaxHits(Integer.parseInt(splitData[3]));
+		
+		this.rotationSpeed = Float.parseFloat(splitData[4]);
+		
+		this.setPropertiesID(Integer.parseInt(splitData[5]));
+		this.applyProperties(propertiesID);
+	}
+
 }

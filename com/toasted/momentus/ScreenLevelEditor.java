@@ -1,32 +1,18 @@
 package com.toasted.momentus;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Scanner;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2D;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 
 public class ScreenLevelEditor extends Screen{
 	SpriteBatch batch;
@@ -53,6 +39,8 @@ public class ScreenLevelEditor extends Screen{
 		Gdx.input.setInputProcessor(this);
 		Box2D.init();
 		level = new Level();
+		
+		level.build(Gdx.files.local("temp_editor.lvl"));
 		
 		physCam = new OrthographicCamera(9, 16);
 		physCam.position.set(physCam.viewportWidth / 2, physCam.viewportHeight / 2, 0);
@@ -85,11 +73,13 @@ public class ScreenLevelEditor extends Screen{
 			//an object is dragged into the unexpanded drawer
 			objectFocus.flagForRemoval();
 			objectFocus.setKeepInHistory(false);
+			System.out.println(objectFocus);
 			System.out.println("deleted object");
 		} else if(drawerExpanded && drawerExpandedRect.contains(v2.x, v2.y)){
 			if(objectFocus != null){
 				//didn't drag out of drawer
 				objectFocus.setPosition(objectFocus.getInitialPosition());
+				objectFocus.setAngle(objectFocus.getInitialRotation());
 			}
 		} else if(drawerExpanded && !drawerExpandedRect.contains(v2.x, v2.y)){
 			closeDrawer();
@@ -98,6 +88,7 @@ public class ScreenLevelEditor extends Screen{
 			
 		} else if(!drawerExpanded && playRect.contains(v2.x, v2.y)){
 			Momentus.setScreen(new ScreenGame(level));
+			level.compile(Gdx.files.local("temp_editor.lvl"));
 		} 
 		
 		if((System.currentTimeMillis() - touchStartTime) / 1000.0f > Constants.longTouchDuration && !dragged){
@@ -106,7 +97,10 @@ public class ScreenLevelEditor extends Screen{
 //			rotateMode = true;
 			
 		} else { 
-			if(objectFocus != null) objectFocus.resetInitialPosition();
+			if(objectFocus != null) {
+				objectFocus.resetInitialPosition();
+				objectFocus.resetInitalRotation();
+			}
 			objectFocus = null; // TEMP
 		}
 		
@@ -119,6 +113,7 @@ public class ScreenLevelEditor extends Screen{
 		drawerExpanded = false;
 		if(objectFocus != null){
 			objectFocus.resetInitialPosition();
+			objectFocus.resetInitalRotation();
 			objectFocus.setKeepInHistory(true);
 		}
 		for(PhysObj obj: drawerIcons){
@@ -177,7 +172,7 @@ public class ScreenLevelEditor extends Screen{
 
 	@Override
 	public void update(float delta) {
-		level.syncObjects();
+		level.syncObjects(0);
 		
 		if((System.currentTimeMillis() - touchStartTime) / 1000.0f > Constants.longTouchDuration && !dragged && objectFocus != null){
 			rotateMode = true;
@@ -231,6 +226,20 @@ public class ScreenLevelEditor extends Screen{
 				break;
 			}
 		}
+		return false;
+	}
+	public boolean keyUp(int key){
+		if(super.keyUp(key)) return true;
+		if(key == Keys.I){
+			Scanner scanner = new Scanner(System.in);
+			String objString = scanner.nextLine();
+			
+			PhysObj obj = level.addBox(0, 0, 2, .5f);
+			obj.setFromString(objString);
+			scanner.close();
+		}
+		
+		
 		return false;
 	}
 }
