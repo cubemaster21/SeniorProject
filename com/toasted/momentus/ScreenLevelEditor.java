@@ -20,11 +20,10 @@ public class ScreenLevelEditor extends Screen{
 	Level level;
 	
 	ArrayList<PhysObj> drawerIcons = new ArrayList<PhysObj>();
-	Texture drawer = new Texture("drawer.png");
-	Rectangle drawerRect = new Rectangle(Momentus.cam.viewportWidth - Momentus.cam.viewportWidth / 5, 10, drawer.getWidth(), drawer.getHeight());
-	Rectangle drawerExpandedRect = new Rectangle(256, 10, drawer.getWidth(), drawer.getHeight());
-	Texture play = new Texture("playArrow.png");
-	Texture rotate = new Texture("rotate.png");
+	
+	Rectangle drawerRect = new Rectangle(Momentus.cam.viewportWidth - Momentus.cam.viewportWidth / 5, 10, Art.drawer.getWidth(), Art.drawer.getHeight());
+	Rectangle drawerExpandedRect = new Rectangle(256, 10, Art.drawer.getWidth(), Art.drawer.getHeight());
+	
 	Rectangle playRect = new Rectangle(10, 10, 256, 256);
 	boolean drawerExpanded = false;
 	
@@ -136,15 +135,20 @@ public class ScreenLevelEditor extends Screen{
 		PhysObj icon4 = level.addBox(icon1.getPosition().x - 1, .57f, 2, .5f);
 		icon4.applyProperties(4);
 		
+		PhysObj icon5 = level.addBox(icon2.getPosition().x - 1, .57f, 2, .5f);
+		icon5.applyProperties(5);
+		
 		icon1.setKeepInHistory(false);
 		icon2.setKeepInHistory(false);
 		icon3.setKeepInHistory(false);
 		icon4.setKeepInHistory(false);
+		icon5.setKeepInHistory(false);
 		
 		drawerIcons.add(icon1);
 		drawerIcons.add(icon2);
 		drawerIcons.add(icon3);
 		drawerIcons.add(icon4);
+		drawerIcons.add(icon5);
 	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -188,11 +192,11 @@ public class ScreenLevelEditor extends Screen{
 		
 		level.draw(batch);
 		if(rotateMode){
-			batch.draw(rotate, objectFocus.getPosition().x * Constants.scale - 128, objectFocus.getPosition().y * Constants.scale - 128);
+			batch.draw(Art.rotate, objectFocus.getPosition().x * Constants.scale - 128, objectFocus.getPosition().y * Constants.scale - 128);
 		}
 		
-		batch.draw(drawer, (drawerExpanded ? 256 : Momentus.cam.viewportWidth - Momentus.cam.viewportWidth / 5), 10);
-		batch.draw(play, playRect.getX(),playRect.getY());
+		batch.draw(Art.drawer, (drawerExpanded ? 256 : Momentus.cam.viewportWidth - Momentus.cam.viewportWidth / 5), 10);
+		batch.draw(Art.play, playRect.getX(),playRect.getY());
 		for(PhysObj obj: drawerIcons){
 			obj.draw(batch);
 		}

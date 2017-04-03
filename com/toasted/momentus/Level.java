@@ -1,5 +1,6 @@
 package com.toasted.momentus;
 
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -25,7 +26,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Level {
 	World world;
 	Vector2 gravity = new Vector2(0, -20f);
-	static Texture ball, plat;
+	
 	PhysObj ballObj;
 	ArrayList<PhysObj> objects = new ArrayList<PhysObj>();
 	ArrayList<Effect> effects; // Just a reference to the ScreenGame variable's arrayList. Set by screengame
@@ -35,8 +36,6 @@ public class Level {
 	float timeLeft = 30;
 	
 	public Level(){
-		ball = new Texture("circle.png");
-		plat = new Texture("plat.png");
 		
 		world = new World(gravity, true);
 		world.setContactListener(new ContactListener(){
@@ -92,7 +91,7 @@ public class Level {
 		final PhysObj rightSide = addBox(9, 0, 1, 16);
 		final PhysObj top = addBox(0, 16, 9, 1);
 		
-		Sprite NO_RENDER = new Sprite(new TextureRegion(ball, 0, 0, 0 ,0));
+		Sprite NO_RENDER = new Sprite(new TextureRegion(Art.ball, 0, 0, 0 ,0));
 		
 		ground.setSprite(NO_RENDER);
 		leftSide.setSprite(NO_RENDER);
@@ -152,7 +151,7 @@ public class Level {
 		circle.dispose();
 //		polygon.dispose();
 		ballObj = new PhysObj(body, bodyDef, fixture);
-		ballObj.setSprite(new Sprite(ball));
+		ballObj.setSprite(new Sprite(Art.ball));
 		objects.add(ballObj);
 	}
 	
@@ -201,7 +200,7 @@ public class Level {
 		Fixture f = body.createFixture(polygon, 0);
 		polygon.dispose();
 		PhysObj obj = new PhysObj(body, bodyDef, f);
-		obj.setSprite(new Sprite(plat));
+		obj.setSprite(new Sprite(Art.plat));
 		
 		objects.add(obj);
 		
@@ -228,6 +227,10 @@ public class Level {
 		file.writeString(sb.toString(), false);
 	}
 	public void build(FileHandle file){
+		if(!file.exists()){
+			System.err.println("Level file does not exist!");
+			return;
+		}
 		String contents = file.readString();
 		String[] lines = contents.split("\n");
 		for(String line: lines){

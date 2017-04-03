@@ -82,6 +82,7 @@ public class PhysObj {
 	public float getInitialRotation(){
 		return initialRotation;
 	}
+	//only works while the world is loaded, getAngle() will return 0 unless the world has been inited
 	public void resetInitalRotation(){
 		initialRotation = getAngle();
 	}
@@ -170,10 +171,13 @@ public class PhysObj {
 			fixture.setRestitution(1.3f);
 			break;
 		case 4:
-			//stick?
+			//rotate cc
 			sprite.setColor(Color.GREEN);
 			rotationSpeed = .5f;
 			break;
+		case 5: 
+			sprite.setColor(Color.PURPLE);
+			rotationSpeed = -.5f;
 		}
 	}
 	public int getPropertiesID() {
@@ -194,10 +198,12 @@ public class PhysObj {
 	public void setFromString(String data){
 		String[] splitData = data.split(":");
 		this.setPosition(Float.parseFloat(splitData[0]), Float.parseFloat(splitData[1]));
-		this.resetInitalRotation();
+//		this.resetInitalRotation();
+		this.initialPosition = new Vector2(Float.parseFloat(splitData[0]), Float.parseFloat(splitData[1]));
 		
 		this.setAngle(Float.parseFloat(splitData[2]));
-		this.resetInitalRotation();
+//		this.resetInitalRotation();
+		this.initialRotation = Float.parseFloat(splitData[2]);
 		
 		this.setMaxHits(Integer.parseInt(splitData[3]));
 		

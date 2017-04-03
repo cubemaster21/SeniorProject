@@ -15,10 +15,9 @@ public class ScreenMainMenu extends Screen{
 		mscreen.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
 		UIButton opbutt= new UIButton(976,1872);
 		uiElements.add(opbutt);
-		Texture oimg = new Texture("options.png");//add this file
-		TextureRegion paintedmeat = new TextureRegion(oimg);
+		
 		opbutt.setbuttext("Options");
-		opbutt.setimg(paintedmeat);
+		opbutt.setimg(new TextureRegion(Art.optionsIcon));
 		opbutt.setaction(new UIAction(){
 			public void doAction(){
 				Momentus.setScreen(new ScreenOptions());;
