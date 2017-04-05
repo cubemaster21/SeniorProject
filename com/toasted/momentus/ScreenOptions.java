@@ -33,10 +33,16 @@ public class ScreenOptions extends Screen {
 		final TextureRegion musicbut = new TextureRegion(mimg);
 		final TextureRegion nomusicbut = new TextureRegion(nmimg);
 		sound.setimg(soundbut);
-		music.setimg(musicbut);
 		gohome.setbuttext("Main Menu");
 		sound.setbuttext("Sound On");
-		music.setbuttext("Music On");
+		if (Momentus.musicplaying == true){
+			music.setbuttext("Music On");
+			music.setimg(musicbut);
+		}
+		else{
+			music.setbuttext("Music Off");
+			music.setimg(nomusicbut);
+		}
 		gohome.setimg(homebut);
 		gohome.setbuttext("Main Menu");
 		gohome.setimg(new TextureRegion(Art.plat));
@@ -49,13 +55,17 @@ public class ScreenOptions extends Screen {
 		});
 		music.setaction(new UIAction(){
 			public void doAction(){
-				if(music.getimg()== musicbut){
+				if(Momentus.musicplaying == true){
 				music.setimg(nomusicbut);
 				music.setbuttext("Music Off");
+				Momentus.musicmenu.setVolume(0);
+				Momentus.musicplaying = false;
 				}
 				else{
 					music.setimg(musicbut);
 					music.setbuttext("Music On");
+					Momentus.musicmenu.setVolume(1);
+					Momentus.musicplaying = true;
 				}
 			}});;
 		sound.setaction(new UIAction(){

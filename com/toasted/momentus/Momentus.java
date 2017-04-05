@@ -2,6 +2,7 @@ package com.toasted.momentus;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +14,8 @@ public class Momentus extends ApplicationAdapter{
 	public static BitmapFont opfont;
 	private static Screen currentScreen, nextScreen;
 	public static OrthographicCamera cam;
+	public static Music musicmenu;
+	public static boolean musicplaying = true;
 	float scale = 128;
 	boolean gameTest = false;
 	
@@ -31,6 +34,9 @@ public class Momentus extends ApplicationAdapter{
 		FileHandle fntFile = Gdx.files.internal("boxy.fnt");
 		FileHandle pngFile = Gdx.files.internal("boxy.png");
 		
+		musicmenu = Gdx.audio.newMusic(Gdx.files.internal("menumusic.wav"));
+		musicmenu.play();
+		musicmenu.setLooping(true);
 		font = new BitmapFont(fntFile, pngFile, false);
 		font.getData().setScale(scale / 10);
 		
