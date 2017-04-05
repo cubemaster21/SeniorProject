@@ -15,13 +15,21 @@ public class ScreenMainMenu extends Screen{
 		mscreen.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
 		UIButton opbutt= new UIButton(976,1872);
 		uiElements.add(opbutt);
-		
+		UIButton selectlev= new UIButton(400,1200);
+		uiElements.add(selectlev);
 		opbutt.setbuttext("Options");
 		opbutt.setimg(new TextureRegion(Art.optionsIcon));
 		opbutt.setaction(new UIAction(){
 			public void doAction(){
 				Momentus.setScreen(new ScreenOptions());;
 				
+			}
+		});
+		selectlev.setbuttext("Level Select");
+		selectlev.setimg(new TextureRegion(Art.optionsIcon));
+		selectlev.setaction(new UIAction(){
+			public void doAction(){
+				Momentus.setScreen(new ScreenLevelSelect());
 			}
 		});
 	}
