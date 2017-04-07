@@ -35,11 +35,10 @@ public class ScreenOptions extends Screen {
 		sound.setimg(soundbut);
 		gohome.setbuttext("Main Menu");
 		sound.setbuttext("Sound On");
-		if (Momentus.musicplaying == true){
+		if (Audio.enabled){
 			music.setbuttext("Music On");
 			music.setimg(musicbut);
-		}
-		else{
+		}else{
 			music.setbuttext("Music Off");
 			music.setimg(nomusicbut);
 		}
@@ -55,17 +54,14 @@ public class ScreenOptions extends Screen {
 		});
 		music.setaction(new UIAction(){
 			public void doAction(){
-				if(Momentus.musicplaying == true){
-				music.setimg(nomusicbut);
-				music.setbuttext("Music Off");
-				Momentus.musicmenu.setVolume(0);
-				Momentus.musicplaying = false;
-				}
-				else{
+				if(Audio.enabled){
+					music.setimg(nomusicbut);
+					music.setbuttext("Music Off");
+					Audio.setMusicVolume(0);
+				}else{
 					music.setimg(musicbut);
 					music.setbuttext("Music On");
-					Momentus.musicmenu.setVolume(1);
-					Momentus.musicplaying = true;
+					Audio.setMusicVolume(1);
 				}
 			}});;
 		sound.setaction(new UIAction(){

@@ -14,14 +14,13 @@ public class Momentus extends ApplicationAdapter{
 	public static BitmapFont opfont;
 	private static Screen currentScreen, nextScreen;
 	public static OrthographicCamera cam;
-	public static Music musicmenu;
-	public static boolean musicplaying = true;
 	float scale = 128;
 	boolean gameTest = false;
 	
 	public Momentus(boolean gameTest){
 		//only called by Eddie's implementation
 		this.gameTest = gameTest;
+		
 	}
 	public Momentus(){}
 	
@@ -29,14 +28,12 @@ public class Momentus extends ApplicationAdapter{
 	@Override
 	public void create () {
 		Art.init();
+		Audio.init();
 		Gdx.input.setCatchBackKey(true);
 		
 		FileHandle fntFile = Gdx.files.internal("boxy.fnt");
 		FileHandle pngFile = Gdx.files.internal("boxy.png");
 		
-		musicmenu = Gdx.audio.newMusic(Gdx.files.internal("menumusic.wav"));
-		musicmenu.play();
-		musicmenu.setLooping(true);
 		font = new BitmapFont(fntFile, pngFile, false);
 		font.getData().setScale(scale / 10);
 		
