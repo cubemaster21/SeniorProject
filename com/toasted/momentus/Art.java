@@ -11,4 +11,6 @@ public class Art {
 	public static Texture rotate = new Texture("rotate.png");
 	public static Texture drawer = new Texture("drawer.png");
 	public static Texture optionsIcon = new Texture("options.png");
+	
+	public static Texture bgTrainingRoom = new Texture("TrainingRoom.png");
 }

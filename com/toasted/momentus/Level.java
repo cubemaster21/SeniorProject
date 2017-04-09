@@ -179,6 +179,8 @@ public class Level {
 		ballObj.sync(delta);	
 	}
 	public void draw(SpriteBatch batch){
+		batch.draw(Art.bgTrainingRoom, 0,0,Momentus.cam.viewportWidth, Momentus.cam.viewportHeight);
+		
 		for(PhysObj obj: objects){
 			obj.draw(batch);
 		}
