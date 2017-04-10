@@ -9,9 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 public class ScreenLevelSelect extends Screen{
 	
 	SpriteBatch levscreen;
-	String numlev = "";
 	int levnum = 1;
-	UIButton [][] levelnum = new UIButton[5][7];
 	public ScreenLevelSelect(){
 		super();
 		levscreen= new SpriteBatch();
@@ -32,12 +30,22 @@ public class ScreenLevelSelect extends Screen{
 			int q = 0;
 			int p = 0;
 			for(int x = 0; x < 5; x++){
-				levelnum[q][p] = new UIButton(x * 180 + 136, y* 256);
-				levelnum[q][p].setimg(new TextureRegion(Art.optionsIcon));
-				levelnum[q][p].setbuttext(numlev + levnum);
+//				levelnum[q][p] = new UIButton(x * 180 + 136, y* 256);
+//				levelnum[q][p].setimg(new TextureRegion(Art.optionsIcon));
+//				levelnum[q][p].setbuttext(numlev + levnum);
+//				levnum++;
+//				uiElements.add(levelnum[q][p]);
+//				levelnum[q][p].setaction(new UIAction(){
+//					public void doAction(){
+//						Momentus.setScreen(new ScreenLevelEditor());
+//					}
+//				});
+				UIButton newButton = new UIButton(x * 180 + 136, y* 256);
+				newButton.setimg(new TextureRegion(Art.optionsIcon));
+				newButton.setbuttext("" + levnum);
 				levnum++;
-				uiElements.add(levelnum[q][p]);
-				levelnum[q][p].setaction(new UIAction(){
+				uiElements.add(newButton);
+				newButton.setaction(new UIAction(){
 					public void doAction(){
 						Momentus.setScreen(new ScreenLevelEditor());
 						Level l = new Level();

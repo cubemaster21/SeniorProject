@@ -58,10 +58,12 @@ public class ScreenOptions extends Screen {
 					music.setimg(nomusicbut);
 					music.setbuttext("Music Off");
 					Audio.setMusicVolume(0);
+					Audio.enabled = false;
 				}else{
 					music.setimg(musicbut);
 					music.setbuttext("Music On");
 					Audio.setMusicVolume(1);
+					Audio.enabled = true;
 				}
 			}});;
 		sound.setaction(new UIAction(){
