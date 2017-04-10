@@ -1,5 +1,6 @@
 package com.toasted.momentus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -39,6 +40,9 @@ public class ScreenLevelSelect extends Screen{
 				levelnum[q][p].setaction(new UIAction(){
 					public void doAction(){
 						Momentus.setScreen(new ScreenLevelEditor());
+						Level l = new Level();
+						l.build(Gdx.files.internal("temp_editor.lvl"));
+						Momentus.setScreen(new ScreenGame(l, false));
 					}
 				});
 				q++;

@@ -86,7 +86,7 @@ public class ScreenLevelEditor extends Screen{
 			openDrawer();
 			
 		} else if(!drawerExpanded && playRect.contains(v2.x, v2.y)){
-			Momentus.setScreen(new ScreenGame(level));
+			Momentus.setScreen(new ScreenGame(level, true));
 			level.compile(Gdx.files.local("temp_editor.lvl"));
 		} 
 		

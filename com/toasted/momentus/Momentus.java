@@ -41,7 +41,7 @@ public class Momentus extends ApplicationAdapter{
 		hitFont.getData().setScale(scale / 18);
 		
 		opfont = new BitmapFont(fntFile, pngFile, false);
-		opfont.getData().setScale(scale / 42);
+		opfont.getData().setScale(scale / 25);
 		
 		cam = new OrthographicCamera(9 * scale, 16 * scale);
 		cam.position.set(cam.viewportWidth / 2, cam.viewportHeight / 2, 0);

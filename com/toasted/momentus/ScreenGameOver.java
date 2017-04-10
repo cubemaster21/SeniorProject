@@ -4,22 +4,23 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 
-public class ScreenGame extends Screen{
+import sun.java2d.pipe.ShapeSpanIterator;
+
+public class ScreenGameOver extends Screen{
 	SpriteBatch batch;
-	
-//	Box2DDebugRenderer debugRenderer;
-//	OrthographicCamera cam;
+	ShapeRenderer shape;
 	OrthographicCamera physCam;
-	
-//	Sprite ballSprite;
 	
 	ArrayList<Effect> effects = new ArrayList<Effect>();
 	Level level;
@@ -27,9 +28,10 @@ public class ScreenGame extends Screen{
 	boolean skipNextUpdate = false;
 	boolean returnToLevelEditor;
 	
-	public ScreenGame(Level l, boolean returnToLevelEditor){
-		this.returnToLevelEditor = returnToLevelEditor;
-		this.level = l;
+	public ScreenGameOver(ScreenGame game){
+		shape = new ShapeRenderer();
+		this.level = game.level;
+		this.effects = game.effects;
 		Gdx.input.setInputProcessor(this);
 		Box2D.init();
 		physCam = new OrthographicCamera(9, 16);
@@ -38,7 +40,7 @@ public class ScreenGame extends Screen{
 		
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(Momentus.cam.combined);
-		
+		shape.setProjectionMatrix(Momentus.cam.combined);
 		level.setEffectsManager(effects);
 	
 		
@@ -57,28 +59,7 @@ public class ScreenGame extends Screen{
 	}
 
 	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-		//update level
-		if(skipNextUpdate){
-			skipNextUpdate = false;
-			return;
-		}
-		level.update(delta);
-		for(int i = 0;i < effects.size();i++){
-			if(!effects.get(i).alive){
-				effects.remove(i);
-				i--;
-				continue;
-			}
-			effects.get(i).update(delta);
-		}
-		if(level.timeLeft <= 0){
-			if(returnToLevelEditor)
-				returnToLevelEditor();
-			else
-				Momentus.setScreen(new ScreenGameOver(this));
-		}
+	public void update(float delta){
 	}
 
 	@Override
@@ -92,16 +73,34 @@ public class ScreenGame extends Screen{
 		level.draw(batch);
 		
 		GlyphLayout scoreLayout = new GlyphLayout();
-		scoreLayout.setText(Momentus.font, "" + level.score);
-		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 1.2f * scoreLayout.height);
 		
-		scoreLayout.setText(Momentus.font, "" + (int)level.timeLeft);
-		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, 0.2f * scoreLayout.height);
+		
 		for(Effect e: effects){
 			e.draw(batch);
 		}
 		
 		batch.end();
+		
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		
+		shape.begin(ShapeType.Filled);
+		
+//		shape.setColor(0, 0, 0, .1f);
+		shape.setColor(0, 0, 0, .7f);
+		shape.rect(0, 0, Momentus.cam.viewportWidth, Momentus.cam.viewportHeight);
+		shape.end();
+		Gdx.gl.glDisable(GL20.GL_BLEND);
+		batch.begin();
+		scoreLayout.setText(Momentus.font, "" + level.score);
+		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 10f * scoreLayout.height);
+		
+		
+		scoreLayout.setText(Momentus.font,"Final Score:");
+		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 8.5f * scoreLayout.height);
+		
+		batch.end();
+		
 	}
 	
 	Vector2 temp = new Vector2();
