@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -44,7 +45,29 @@ public class ScreenGameOver extends Screen{
 		level.setEffectsManager(effects);
 	
 		
+		UIButton gohome= new UIButton(Momentus.cam.viewportWidth / 2 - Art.plat.getWidth() / 2, 76);
+		gohome.setbuttext("Level Select");
+		gohome.setimg(new TextureRegion(Art.plat));
+		gohome.setaction(new UIAction(){
+			public void doAction(){
+				Momentus.setScreen(new ScreenLevelSelect());
+				
+			}
+		});
 		
+		UIButton playAgain = new UIButton(Momentus.cam.viewportWidth / 2 - Art.plat.getWidth() / 2, 76 + Art.plat.getHeight() * 1.3f);
+		playAgain.setbuttext("Play Again");
+		playAgain.setimg(new TextureRegion(Art.plat));
+		playAgain.setaction(new UIAction(){
+			public void doAction(){
+				level.reset();
+				
+				Momentus.setScreen(new ScreenGame(level, false));
+			}
+		});
+		
+		uiElements.add(playAgain);
+		uiElements.add(gohome);
 		
 	}
 
@@ -98,6 +121,13 @@ public class ScreenGameOver extends Screen{
 		
 		scoreLayout.setText(Momentus.font,"Final Score:");
 		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 8.5f * scoreLayout.height);
+		
+		for (int i = 0; i<uiElements.size(); i++)
+		{
+			uiElements.get(i).draw(batch);
+		}
+		
+		
 		
 		batch.end();
 		
