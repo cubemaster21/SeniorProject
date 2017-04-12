@@ -223,7 +223,7 @@ public class Level {
 			}
 			sb.append(po.toString());
 			if(i < objects.size() - 1){
-				sb.append("\n");
+				sb.append("/");
 			}
 		}
 		file.writeString(sb.toString(), false);
@@ -234,7 +234,7 @@ public class Level {
 			return;
 		}
 		String contents = file.readString();
-		String[] lines = contents.split("\n");
+		String[] lines = contents.split("/");
 		for(String line: lines){
 			String[] fSplit = line.split("\\|");
 			if(fSplit[0].equals("ball")){

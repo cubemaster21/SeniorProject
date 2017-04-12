@@ -47,7 +47,7 @@ public class ScreenLevelSelect extends Screen{
 				uiElements.add(newButton);
 				newButton.setaction(new UIAction(){
 					public void doAction(){
-						Momentus.setScreen(new ScreenLevelEditor());
+//						Momentus.setScreen(new ScreenLevelEditor());
 						Level l = new Level();
 						
 						l.build(Gdx.files.internal("levels/" + levelFile + ".lvl"));
