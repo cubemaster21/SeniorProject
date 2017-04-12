@@ -43,13 +43,14 @@ public class ScreenLevelSelect extends Screen{
 				UIButton newButton = new UIButton(x * 180 + 136, y* 256);
 				newButton.setimg(new TextureRegion(Art.optionsIcon));
 				newButton.setbuttext("" + levnum);
-				levnum++;
+				final int levelFile = levnum++;
 				uiElements.add(newButton);
 				newButton.setaction(new UIAction(){
 					public void doAction(){
 						Momentus.setScreen(new ScreenLevelEditor());
 						Level l = new Level();
-						l.build(Gdx.files.internal("temp_editor.lvl"));
+						
+						l.build(Gdx.files.internal("levels/" + levelFile + ".lvl"));
 						Momentus.setScreen(new ScreenGame(l, false));
 					}
 				});

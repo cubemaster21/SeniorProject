@@ -30,6 +30,7 @@ public class ScreenGameOver extends Screen{
 	boolean returnToLevelEditor;
 	
 	public ScreenGameOver(ScreenGame game){
+		super();
 		shape = new ShapeRenderer();
 		this.level = game.level;
 		this.effects = game.effects;
@@ -51,7 +52,6 @@ public class ScreenGameOver extends Screen{
 		gohome.setaction(new UIAction(){
 			public void doAction(){
 				Momentus.setScreen(new ScreenLevelSelect());
-				
 			}
 		});
 		
@@ -61,14 +61,12 @@ public class ScreenGameOver extends Screen{
 		playAgain.setaction(new UIAction(){
 			public void doAction(){
 				level.reset();
-				
 				Momentus.setScreen(new ScreenGame(level, false));
 			}
 		});
 		
 		uiElements.add(playAgain);
 		uiElements.add(gohome);
-		
 	}
 
 	@Override
@@ -136,13 +134,9 @@ public class ScreenGameOver extends Screen{
 	Vector2 temp = new Vector2();
 	
 	public Vector2 unprojectScreenCoords(int x, int y) {
-		Vector3 t = Momentus.cam.unproject(new Vector3(x, y, 0));
-		t = Momentus.cam.unproject(t);
-		return temp.set(t.x, t.y);
-	}
-	public boolean touchDown(int screenX, int screenY, int pointer, int button){
-		if(super.touchDown(screenX, screenY, pointer, button)) return true;
-		return false;
+		Vector3 v = new Vector3(x,y, 0);
+		v = Momentus.cam.unproject(v);
+		return new Vector2(v.x, v.y);
 	}
 	public boolean keyUp(int keycode){
 		if(keycode == Keys.BACK || keycode == Keys.BACKSPACE){
