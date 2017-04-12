@@ -123,7 +123,7 @@ public class Level {
 		}
 		score = 0;
 		timeLeft = 30;
-		
+		gravity.set(0, -20f);
 	}
 	public void spawnBall(){
 		BodyDef bodyDef = new BodyDef();
