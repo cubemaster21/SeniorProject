@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 public class Audio {
-	private static HashMap<String, Music> musicHash = new HashMap<String, Music>();
+	public static HashMap<String, Music> musicHash = new HashMap<String, Music>();
 	
 	public static Music menu;
 	

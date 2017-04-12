@@ -1,9 +1,9 @@
 package com.toasted.momentus;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,6 +34,8 @@ public class Level {
 	
 	int score;
 	float timeLeft = 30;
+	private Texture bg;
+	private Music music;
 	
 	public Level(){
 		
@@ -179,7 +181,7 @@ public class Level {
 		ballObj.sync(delta);	
 	}
 	public void draw(SpriteBatch batch){
-		batch.draw(Art.bgTrainingRoom, 0,0,Momentus.cam.viewportWidth, Momentus.cam.viewportHeight);
+		batch.draw(bg, 0,0,Momentus.cam.viewportWidth, Momentus.cam.viewportHeight);
 		
 		for(PhysObj obj: objects){
 			obj.draw(batch);
@@ -239,7 +241,12 @@ public class Level {
 			String[] fSplit = line.split("\\|");
 			if(fSplit[0].equals("ball")){
 				ballObj.setFromString(fSplit[1]);
-			} else {
+			} else if(fSplit[0].equals("bg")){
+				bg = Art.backgrounds.get(fSplit[1]);
+			} else if(fSplit[0].equals("music")){
+				music = Audio.musicHash.get(fSplit[1]);
+			}else {
+				
 				addBox(0,0,2, .5f).setFromString(fSplit[0]);
 			}
 		}
