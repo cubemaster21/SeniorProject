@@ -34,7 +34,7 @@ public class Level {
 	
 	int score;
 	float timeLeft = 30;
-	private Texture bg;
+	private Texture bg = Art.bgTrainingRoom;
 	private Music music;
 	
 	public Level(){
@@ -42,7 +42,6 @@ public class Level {
 		world = new World(gravity, true);
 		world.setContactListener(new ContactListener(){
 
-			@Override
 			public void beginContact(Contact contact) {
 				Fixture fa = contact.getFixtureA();
 				Fixture fb = contact.getFixtureB();
@@ -61,26 +60,18 @@ public class Level {
 				}
 //				platform.getSprite().setColor(Color.GOLD);
 				platform.hit();
-				score++;
+				int newPoints = (platform.getPropertiesID() == 6 ? 5 : 1);
+				score += newPoints;
 				if(effects != null)
-					effects.add(new EffectTextShine("+1", platform.getPosition().x * Constants.scale, platform.getPosition().y * Constants.scale, 1f));
+					effects.add(new EffectTextShine("+" + newPoints, platform.getPosition().x * Constants.scale, platform.getPosition().y * Constants.scale, 1f));
 			}
-
-			@Override
 			public void endContact(Contact contact) {
-				// TODO Auto-generated method stub
 				
 			}
-
-			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
-				// TODO Auto-generated method stub
 				
 			}
-
-			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -182,7 +173,7 @@ public class Level {
 	}
 	public void draw(SpriteBatch batch){
 		batch.draw(bg, 0,0,Momentus.cam.viewportWidth, Momentus.cam.viewportHeight);
-		
+		ballObj.draw(batch);
 		for(PhysObj obj: objects){
 			obj.draw(batch);
 		}

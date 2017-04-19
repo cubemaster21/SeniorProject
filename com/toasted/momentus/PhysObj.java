@@ -147,7 +147,8 @@ public class PhysObj {
 			break;
 		case 2: 
 			//Ice
-			sprite.setColor(Color.BLUE);
+			sprite.setTexture(Art.platIce);
+//			sprite.setColor(Color.BLUE);
 			setMaxHits(4);
 			destroyAction = new DestroyAction(){
 				public void onDestroy(Level l, PhysObj obj){
@@ -167,17 +168,24 @@ public class PhysObj {
 			break;
 		case 3:
 			//bouncy
-			sprite.setColor(Color.PINK);
+			sprite.setTexture(Art.platBounce);
+//			sprite.setColor(Color.PINK);
 			fixture.setRestitution(1.3f);
 			break;
 		case 4:
 			//rotate cc
-			sprite.setColor(Color.GREEN);
+			sprite.setTexture(Art.platRotate);
+//			sprite.setColor(Color.GREEN);
 			rotationSpeed = .5f;
 			break;
 		case 5: 
-			sprite.setColor(Color.PURPLE);
+			sprite.setTexture(Art.platRotate);
+//			sprite.setColor(Color.PURPLE);
 			rotationSpeed = -.5f;
+			break;
+		case 6: 
+			sprite.setTexture(Art.platGold);
+			
 		}
 	}
 	public int getPropertiesID() {

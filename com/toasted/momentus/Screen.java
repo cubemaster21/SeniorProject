@@ -47,4 +47,10 @@ public abstract class Screen implements InputProcessor{
 	public boolean scrolled (int amount){
 		return false;
 	}
+	public float getWidth(){
+		return Momentus.cam.viewportWidth;
+	}
+	public float getHeight(){
+		return Momentus.cam.viewportHeight;
+	}
 }

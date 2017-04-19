@@ -138,17 +138,22 @@ public class ScreenLevelEditor extends Screen{
 		PhysObj icon5 = level.addBox(icon2.getPosition().x - 1, .57f, 2, .5f);
 		icon5.applyProperties(5);
 		
+		PhysObj icon6 = level.addBox(icon2.getPosition().x + 1.3f, .57f, 2, .5f);
+		icon6.applyProperties(6);
+		
 		icon1.setKeepInHistory(false);
 		icon2.setKeepInHistory(false);
 		icon3.setKeepInHistory(false);
 		icon4.setKeepInHistory(false);
 		icon5.setKeepInHistory(false);
+		icon6.setKeepInHistory(false);
 		
 		drawerIcons.add(icon1);
 		drawerIcons.add(icon2);
 		drawerIcons.add(icon3);
 		drawerIcons.add(icon4);
 		drawerIcons.add(icon5);
+		drawerIcons.add(icon6);
 	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {

@@ -9,6 +9,10 @@ public class Audio {
 	public static HashMap<String, Music> musicHash = new HashMap<String, Music>();
 	
 	public static Music menu;
+	public static Music bgBamboo;
+	public static Music bgCircus;
+	public static Music bgHalloween;
+	public static Music bgTraining;
 	
 	public static boolean enabled =true;
 	
@@ -16,6 +20,10 @@ public class Audio {
 		try{
 			menu = createMusic("menumusic.wav");
 			menu.setLooping(true);
+			bgBamboo = 		createMusic("bamboomusic.wav");
+			bgCircus = 		createMusic("circusmusic.wav");
+			bgHalloween = 	createMusic("halloweenmusic.wav");
+			bgTraining = 	createMusic("trainingmusic.wav");
 		} catch(Exception e){
 			System.err.println("Failed to load audio sources.");
 			e.printStackTrace();
