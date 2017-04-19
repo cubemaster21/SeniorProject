@@ -19,6 +19,7 @@ public class Art {
 	public static Texture drawer = new Texture("drawer.png");
 	public static Texture optionsIcon = new Texture("options.png");
 	public static Texture button = new Texture("button.png");
+	public static Texture bgMenu = new Texture("bgMenu.png");
 	
 	public static Texture bgTrainingRoom = loadBg("TrainingRoom.png");
 	public static Texture bgHalloween = loadBg("Halloween.png");

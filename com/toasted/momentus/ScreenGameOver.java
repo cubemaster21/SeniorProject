@@ -46,18 +46,18 @@ public class ScreenGameOver extends Screen{
 		level.setEffectsManager(effects);
 	
 		
-		UIButton gohome= new UIButton(Momentus.cam.viewportWidth / 2 - Art.plat.getWidth() / 2, 76);
+		UIButton gohome= new UIButton(Momentus.cam.viewportWidth / 2 - Art.button.getWidth() / 2, 76);
 		gohome.setbuttext("Level Select");
-		gohome.setimg(new TextureRegion(Art.plat));
+		gohome.setimg(new TextureRegion(Art.button));
 		gohome.setaction(new UIAction(){
 			public void doAction(){
 				Momentus.setScreen(new ScreenLevelSelect());
 			}
 		});
 		
-		UIButton playAgain = new UIButton(Momentus.cam.viewportWidth / 2 - Art.plat.getWidth() / 2, 76 + Art.plat.getHeight() * 1.3f);
+		UIButton playAgain = new UIButton(Momentus.cam.viewportWidth / 2 - Art.button.getWidth() / 2, 76 + Art.button.getHeight() * 1.3f);
 		playAgain.setbuttext("Play Again");
-		playAgain.setimg(new TextureRegion(Art.plat));
+		playAgain.setimg(new TextureRegion(Art.button));
 		playAgain.setaction(new UIAction(){
 			public void doAction(){
 				level.reset();

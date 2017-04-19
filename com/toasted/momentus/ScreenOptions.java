@@ -15,19 +15,25 @@ public class ScreenOptions extends Screen {
 		super();
 		opscreen = new SpriteBatch();
 		opscreen.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
-		UIButton gohome= new UIButton(300,76);
-		final UIButton sound = new UIButton(240,1000);
-		final UIButton music = new UIButton(240, 400);
-		uiElements.add(gohome);
-
-		uiElements.add(sound);
-		uiElements.add(music);
-		Texture himg = new Texture("plat.png");//add this file
+		
 		Texture mimg = new Texture("musicon.png");
 		Texture nmimg = new Texture("musicoff.png");
 		Texture simg = new Texture("soundon.png");
 		Texture nsimg = new Texture("soundoff.png");
-		TextureRegion homebut = new TextureRegion(himg);
+		
+		UIButton gohome= new UIButton(getWidth() / 2 - Art.button.getWidth() / 2,76);
+		final UIButton sound = new UIButton(getWidth() / 2 - mimg.getWidth() / 2,1000);
+		final UIButton music = new UIButton(getWidth() / 2 - mimg.getWidth() / 2, 400);
+		
+		
+		
+		
+		uiElements.add(gohome);
+
+		uiElements.add(sound);
+		uiElements.add(music);
+		
+		TextureRegion homebut = new TextureRegion(Art.button);
 		final TextureRegion soundbut = new TextureRegion(simg);
 		final TextureRegion nosoundbut = new TextureRegion(nsimg);
 		final TextureRegion musicbut = new TextureRegion(mimg);
@@ -44,7 +50,6 @@ public class ScreenOptions extends Screen {
 		}
 		gohome.setimg(homebut);
 		gohome.setbuttext("Main Menu");
-		gohome.setimg(new TextureRegion(Art.plat));
 
 		gohome.setaction(new UIAction(){
 			public void doAction(){
@@ -100,6 +105,7 @@ public class ScreenOptions extends Screen {
 	public void draw() {
 		// TODO Auto-generated method stub
 		opscreen.begin();
+		opscreen.draw(Art.bgMenu, 0, 0, getWidth(), getHeight());
 		for (int i = 0; i<uiElements.size(); i++)
 		{
 			uiElements.get(i).draw(opscreen);

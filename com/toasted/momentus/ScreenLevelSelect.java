@@ -14,10 +14,10 @@ public class ScreenLevelSelect extends Screen{
 		super();
 		levscreen= new SpriteBatch();
 		levscreen.setProjectionMatrix(Momentus.cam.combined);
-		UIButton gohome= new UIButton(300,76);
+		UIButton gohome= new UIButton(getWidth() / 2- Art.button.getWidth() / 2,10);
 		//levelnum.setimg(new TextureRegion(Art.optionsIcon));
 		gohome.setbuttext("Main Menu");
-		gohome.setimg(new TextureRegion(Art.plat));
+		gohome.setimg(new TextureRegion(Art.button));
 		uiElements.add(gohome);
 		//uiElements.add(levelnum);
 		gohome.setaction(new UIAction(){
@@ -26,21 +26,9 @@ public class ScreenLevelSelect extends Screen{
 				
 			}
 		});
-		for (int y = 7; y > 0; y--){
-			int q = 0;
-			int p = 0;
+		for (int y = 6; y > -1; y--){
 			for(int x = 0; x < 5; x++){
-//				levelnum[q][p] = new UIButton(x * 180 + 136, y* 256);
-//				levelnum[q][p].setimg(new TextureRegion(Art.optionsIcon));
-//				levelnum[q][p].setbuttext(numlev + levnum);
-//				levnum++;
-//				uiElements.add(levelnum[q][p]);
-//				levelnum[q][p].setaction(new UIAction(){
-//					public void doAction(){
-//						Momentus.setScreen(new ScreenLevelEditor());
-//					}
-//				});
-				UIButton newButton = new UIButton(x * 180 + 136, y* 256);
+				UIButton newButton = new UIButton(x * 180 + 150, y* 200 + Art.button.getHeight() * 1.5f);
 				newButton.setimg(new TextureRegion(Art.optionsIcon));
 				newButton.setbuttext("" + levnum);
 				final int levelFile = levnum++;
@@ -54,9 +42,7 @@ public class ScreenLevelSelect extends Screen{
 						Momentus.setScreen(new ScreenGame(l, false));
 					}
 				});
-				q++;
 			}
-			p++;
 		}
 	}
 
@@ -82,6 +68,7 @@ public class ScreenLevelSelect extends Screen{
 	public void draw() {
 		// TODO Auto-generated method stub
 		levscreen.begin();
+		levscreen.draw(Art.bgMenu, 0, 0, getWidth(), getHeight());
 		for (int i = 0; i<uiElements.size(); i++)
 		{
 			uiElements.get(i).draw(levscreen);
