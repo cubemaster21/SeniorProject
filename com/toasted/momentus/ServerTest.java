@@ -1,6 +1,7 @@
 package com.toasted.momentus;
 import java.sql.*;
 import java.util.Calendar;
+import java.util.Random;
 public class ServerTest {
 	
 	public static void main(String[] args)
@@ -19,7 +20,7 @@ public class ServerTest {
 			
 			String query = "insert into HighScores (Score_Val, levelID) values (?,?);";
 			PreparedStatement preparedstmt = conn.prepareStatement(query);
-			preparedstmt.setString(1,"233939393");
+			preparedstmt.setString(1, "" + (new Random()).nextInt());
 			preparedstmt.setString(2, "Level/convulution");
 			preparedstmt.execute();
 			conn.close();
