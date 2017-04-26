@@ -27,6 +27,9 @@ public class ScreenGame extends Screen{
 	boolean skipNextUpdate = false;
 	boolean returnToLevelEditor;
 	
+	long lastTouchTime = 0;
+	
+	
 	public ScreenGame(Level l, boolean returnToLevelEditor){
 		this.returnToLevelEditor = returnToLevelEditor;
 		this.level = l;
@@ -48,6 +51,12 @@ public class ScreenGame extends Screen{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		long now = System.currentTimeMillis();
+		if(now - lastTouchTime <= 500){
+			Momentus.setScreen(new ScreenGamePaused(this));
+		} else{
+			lastTouchTime = now;
+		}
 		return false;
 	}
 

@@ -60,7 +60,6 @@ public class ScreenGamePaused extends Screen{
 		resume.setimg(new TextureRegion(Art.button));
 		resume.setaction(new UIAction(){
 			public void doAction(){
-				level.reset();
 				Momentus.setScreen(game);
 			}
 		});
