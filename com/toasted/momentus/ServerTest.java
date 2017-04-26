@@ -20,7 +20,7 @@ public class ServerTest {
 			
 			String query = "insert into HighScores (Score_Val, levelID) values (?,?);";
 			PreparedStatement preparedstmt = conn.prepareStatement(query);
-			preparedstmt.setString(1, "" + (new Random()).nextInt());
+			preparedstmt.setInt(1, (new Random()).nextInt());
 			preparedstmt.setString(2, "Level/convulution");
 			preparedstmt.execute();
 			conn.close();
