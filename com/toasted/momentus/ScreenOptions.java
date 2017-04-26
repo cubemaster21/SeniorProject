@@ -22,8 +22,8 @@ public class ScreenOptions extends Screen {
 		Texture nsimg = new Texture("soundoff.png");
 		
 		UIButton gohome= new UIButton(getWidth() / 2 - Art.button.getWidth() / 2,76);
-		final UIButton sound = new UIButton(getWidth() / 2 - mimg.getWidth() / 2,1000);
-		final UIButton music = new UIButton(getWidth() / 2 - mimg.getWidth() / 2, 400);
+		final UIButton sound = new UIButton(getWidth() / 2 - mimg.getWidth() / 2,1200);
+		final UIButton music = new UIButton(getWidth() / 2 - mimg.getWidth() / 2, 600);
 		
 		
 		

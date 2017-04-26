@@ -28,7 +28,7 @@ public class ServerTest {
 		catch (Exception e)
 		{
 			System.err.println("Got and exception!");
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 	}

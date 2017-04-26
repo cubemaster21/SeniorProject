@@ -13,18 +13,10 @@ public class ScreenMainMenu extends Screen{
 		super();
 		mscreen = new SpriteBatch();
 		mscreen.setProjectionMatrix(Momentus.cam.combined); // Needed to keep scale with the rest of the game
-		UIButton opbutt= new UIButton(getWidth() - Art.optionsIcon.getWidth() * 1.35f,1872);
-		uiElements.add(opbutt);
+		
 		UIButton selectlev= new UIButton(getWidth() / 2 - Art.button.getWidth() / 2,1200);
 		uiElements.add(selectlev);
-		opbutt.setbuttext("Options");
-		opbutt.setimg(new TextureRegion(Art.optionsIcon));
-		opbutt.setaction(new UIAction(){
-			public void doAction(){
-				Momentus.setScreen(new ScreenOptions());;
-				
-			}
-		});
+		
 		selectlev.setbuttext("Level Select");
 		selectlev.setimg(new TextureRegion(Art.button));
 		selectlev.setaction(new UIAction(){
@@ -42,6 +34,16 @@ public class ScreenMainMenu extends Screen{
 			}
 		});
 		uiElements.add(levelCreator);
+		UIButton opbutt= new UIButton(getWidth() / 2 - Art.button.getWidth() / 2, levelCreator.y - Art.button.getHeight() * 1.2f);
+		uiElements.add(opbutt);
+		opbutt.setbuttext("Options");
+		opbutt.setimg(new TextureRegion(Art.button));
+		opbutt.setaction(new UIAction(){
+			public void doAction(){
+				Momentus.setScreen(new ScreenOptions());;
+				
+			}
+		});
 		
 		
 		Audio.play(Audio.menu);

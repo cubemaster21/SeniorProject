@@ -27,7 +27,7 @@ public class Art {
 	public static Texture bgCircus = loadBg("Circus.png");
 	public static Texture bgVegas = loadBg("Vegas.png");
 	public static Texture bgBamboo = loadBg("Bamboo.png");
-	
+	public static Texture bgSkyscraper = loadBg("Skyscraper.png");
 	
 	
 	private static Texture loadBg(String filename){
