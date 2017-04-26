@@ -34,6 +34,10 @@ public class ScreenGameOver extends Screen{
 		shape = new ShapeRenderer();
 		this.level = game.level;
 		this.effects = game.effects;
+		
+		Database.SendScoreToDatabase(level.score, level.levelID);
+		
+		
 		Gdx.input.setInputProcessor(this);
 		Box2D.init();
 		physCam = new OrthographicCamera(9, 16);

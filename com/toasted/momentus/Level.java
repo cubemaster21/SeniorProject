@@ -34,6 +34,7 @@ public class Level {
 	
 	int score;
 	float timeLeft = 30;
+	String levelID;
 	private Texture bg = Art.bgTrainingRoom;
 	private Music music = Audio.bgTraining;
 	
@@ -228,6 +229,7 @@ public class Level {
 			System.err.println("Level file does not exist!");
 			return;
 		}
+		levelID = file.name();
 		String contents = file.readString();
 		String[] lines = contents.split("/");
 		for(String line: lines){
