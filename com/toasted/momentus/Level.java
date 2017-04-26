@@ -35,7 +35,7 @@ public class Level {
 	int score;
 	float timeLeft = 30;
 	private Texture bg = Art.bgTrainingRoom;
-	private Music music;
+	private Music music = Audio.bgTraining;
 	
 	public Level(){
 		
@@ -95,6 +95,8 @@ public class Level {
 		objects.remove(rightSide);
 		objects.remove(leftSide);
 		objects.remove(top);
+		
+		
 	}
 	public void reset(){
 		for(PhysObj del: deletedObjects){
@@ -233,13 +235,16 @@ public class Level {
 			if(fSplit[0].equals("ball")){
 				ballObj.setFromString(fSplit[1]);
 			} else if(fSplit[0].equals("bg")){
+				
 				bg = Art.backgrounds.get(fSplit[1]);
 			} else if(fSplit[0].equals("music")){
+				System.out.println("Loading bgmusic: " + fSplit[1]);
 				music = Audio.musicHash.get(fSplit[1]);
 			}else {
 				
 				addBox(0,0,2, .5f).setFromString(fSplit[0]);
 			}
 		}
+		Audio.play(music);
 	}
 }

@@ -47,7 +47,7 @@ public class ScreenLevelEditor extends Screen{
 		
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(Momentus.cam.combined);
-		
+		Audio.play(Audio.menu);
 		
 	}
 	public ScreenLevelEditor(Level l){
@@ -61,6 +61,7 @@ public class ScreenLevelEditor extends Screen{
 		
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(Momentus.cam.combined);
+		Audio.play(Audio.menu);
 	}
 
 	@Override

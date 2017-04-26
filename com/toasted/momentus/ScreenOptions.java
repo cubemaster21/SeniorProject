@@ -82,6 +82,7 @@ public class ScreenOptions extends Screen {
 					sound.setbuttext("Sound On");
 				}
 				}});;
+		Audio.play(Audio.menu);
 	}
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {

@@ -16,6 +16,8 @@ public class Audio {
 	
 	public static boolean enabled =true;
 	
+	public static Music playing;
+	
 	public static void init(){
 		try{
 			menu = createMusic("menumusic.wav");
@@ -31,6 +33,7 @@ public class Audio {
 	}
 	private static Music createMusic(String filename){
 		Music m = Gdx.audio.newMusic(Gdx.files.internal(filename));
+		m.setLooping(true);
 		musicHash.put(filename, m);
 		return m;
 	}
@@ -38,5 +41,11 @@ public class Audio {
 		for(Music m: musicHash.values()){
 			m.setVolume(value);
 		}
+	}
+	public static void play(Music m){
+		if(playing != null)
+			playing.pause();
+		m.play();
+		playing = m;
 	}
 }

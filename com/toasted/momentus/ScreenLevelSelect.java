@@ -44,6 +44,7 @@ public class ScreenLevelSelect extends Screen{
 				});
 			}
 		}
+		Audio.play(Audio.menu);
 	}
 
 	@Override
