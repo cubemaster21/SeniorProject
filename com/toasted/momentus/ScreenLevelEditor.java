@@ -158,7 +158,7 @@ public class ScreenLevelEditor extends Screen{
 	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-
+		if(touchDownPos == null) return false;
 		Vector3 d = Momentus.cam.unproject(new Vector3(screenX, screenY, 0));
 		if(d.sub(touchDownPos).len() < Constants.movementError){
 			return false;
