@@ -35,8 +35,8 @@ public class ScreenGameOver extends Screen{
 		this.level = game.level;
 		this.effects = game.effects;
 		
-		Database.SendScoreToDatabase(level.score, level.levelID);
-		
+		//Database.SendScoreToDatabase(level.score, level.levelID);
+		RealDatabaseTry.PostToScoreBoard(level.score, level.levelID);
 		
 		Gdx.input.setInputProcessor(this);
 		Box2D.init();

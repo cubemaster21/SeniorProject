@@ -22,13 +22,14 @@ public class RealDatabaseTry {
 	 public static void PostToScoreBoard(int score, String level) {
          HttpClient client = new DefaultHttpClient();
          HttpPost post = new HttpPost(
-                         "ec2-34-207-60-3.compute-1.amazonaws.com/db_addscore.php");
+                         "http://ec2-34-207-60-3.compute-1.amazonaws.com:80/db_addscore.php");
          String scoreval = "" + score;
 
          try {
 
                  List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                 nameValuePairs.add(new BasicNameValuePair(level, scoreval));
+                 nameValuePairs.add(new BasicNameValuePair("levelID", level));
+                 nameValuePairs.add(new BasicNameValuePair("Score_Val", scoreval));
                  
 
                  post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
