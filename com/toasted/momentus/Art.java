@@ -29,6 +29,14 @@ public class Art {
 	public static Texture bgBamboo = loadBg("Bamboo.png");
 	public static Texture bgSkyscraper = loadBg("Skyscraper.png");
 	
+	public static Texture[] themeIcons = {new Texture("iconTraining.png"),
+										  new Texture("iconArctic.png"),
+										  new Texture("iconCircus.png"),
+										  new Texture("iconHalloween.png"),
+										  new Texture("iconSkyscraper.png"),
+										  new Texture("iconBamboo.png"),
+										  new Texture("iconVegas.png")};
+	public static Texture logo = new Texture("logo.png");
 	
 	private static Texture loadBg(String filename){
 		Texture t = new Texture(filename);

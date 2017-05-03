@@ -29,7 +29,7 @@ public class ScreenLevelSelect extends Screen{
 		for (int y = 6; y > -1; y--){
 			for(int x = 0; x < 5; x++){
 				UIButton newButton = new UIButton(x * 180 + 150, y* 200 + Art.button.getHeight() * 1.5f);
-				newButton.setimg(new TextureRegion(Art.optionsIcon));
+				newButton.setimg(new TextureRegion(Art.themeIcons[6-y]));
 				newButton.setbuttext("" + levnum);
 				final int levelFile = levnum++;
 				uiElements.add(newButton);

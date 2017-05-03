@@ -70,11 +70,13 @@ public class ScreenMainMenu extends Screen{
 	public void draw() {
 		// TODO Auto-generated method stub
 		mscreen.begin();
+		
 		mscreen.draw(Art.bgMenu, 0, 0, getWidth(), getHeight());
 		for (int i = 0; i<uiElements.size(); i++)
 		{
 			uiElements.get(i).draw(mscreen);
 		}
+		mscreen.draw(Art.logo, getWidth() / 2 - Art.logo.getWidth() / 2, getHeight() * 0.75f);
 		mscreen.end();
 	}
 
