@@ -50,17 +50,16 @@ public class RealDatabaseTry {
                  e.printStackTrace();
          }
  }
-	 public static void ReadFromScoreBoard(int score, String level) {
+	 public static void ReadFromScoreBoard(String level) {
          HttpClient client = new DefaultHttpClient();
          HttpPost post = new HttpPost(
                          "http://ec2-34-207-60-3.compute-1.amazonaws.com:80/db_getscore.php");
-         String scoreval = "" + score;
 
          try {
 
                  List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
                  nameValuePairs.add(new BasicNameValuePair("levelID", level));
-                 nameValuePairs.add(new BasicNameValuePair("Score_Val", scoreval));
+                 
                  
 
                  post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
