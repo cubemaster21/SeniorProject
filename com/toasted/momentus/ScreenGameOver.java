@@ -28,6 +28,7 @@ public class ScreenGameOver extends Screen{
 	
 	boolean skipNextUpdate = false;
 	boolean returnToLevelEditor;
+	int highScore = -2;
 	
 	public ScreenGameOver(ScreenGame game){
 		super();
@@ -37,7 +38,8 @@ public class ScreenGameOver extends Screen{
 		
 		//Database.SendScoreToDatabase(level.score, level.levelID);
 		RealDatabaseTry.PostToScoreBoard(level.score, level.levelID);
-		
+//		System.out.println("Funk Soul Brother");
+		highScore = RealDatabaseTry.ReadFromScoreBoard(level.levelID);
 		Gdx.input.setInputProcessor(this);
 		Box2D.init();
 		physCam = new OrthographicCamera(9, 16);
@@ -123,6 +125,12 @@ public class ScreenGameOver extends Screen{
 		
 		scoreLayout.setText(Momentus.font,"Final Score:");
 		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 8.5f * scoreLayout.height);
+		
+		scoreLayout.setText(Momentus.font, "High Score:");
+		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 4f * scoreLayout.height);
+		
+		scoreLayout.setText(Momentus.font, "" + highScore);
+		Momentus.font.draw(batch, scoreLayout, Momentus.cam.viewportWidth / 2 - scoreLayout.width / 2, Momentus.cam.viewportHeight - 5.5f * scoreLayout.height);
 		
 		for (int i = 0; i<uiElements.size(); i++)
 		{

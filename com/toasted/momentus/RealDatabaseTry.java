@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -50,7 +52,7 @@ public class RealDatabaseTry {
                  e.printStackTrace();
          }
  }
-	 public static void ReadFromScoreBoard(String level) {
+	 public static int ReadFromScoreBoard(String level) {
          HttpClient client = new DefaultHttpClient();
          HttpPost post = new HttpPost(
                          "http://ec2-34-207-60-3.compute-1.amazonaws.com:80/db_getscore.php");
@@ -70,14 +72,21 @@ public class RealDatabaseTry {
                  String line = "";
                  while ((line = rd.readLine()) != null) {
                          System.out.println(line);
-                         if (line.startsWith("Auth=")) {
-                                 String key = line.substring(5);
-                                 // do something with the key
-                         }
+                         Pattern p = Pattern.compile(".*\\\"Score_Val\\\":\\\"(\\d+)\\\".*");
+                         Matcher m = p.matcher(line);
+                         if(m.find()) System.out.println("Matches!");
+                         else System.err.println("NO MATCH?!?");
+                         int value = Integer.parseInt(m.group(1));
+                         return value;
+//                         if (line.startsWith("Auth=")) {
+//                                 String key = line.substring(5);
+//                                 // do something with the key
+//                         }
 
                  }
          } catch (IOException e) {
                  e.printStackTrace();
          }
+         return -1;
  }
 }
