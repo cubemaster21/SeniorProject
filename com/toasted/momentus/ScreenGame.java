@@ -126,7 +126,7 @@ public class ScreenGame extends Screen{
 	}
 	public boolean keyUp(int keycode){
 		if(keycode == Keys.BACK || keycode == Keys.BACKSPACE){
-			returnToLevelEditor();
+			if(returnToLevelEditor) returnToLevelEditor();
 		}
 		return false;
 	}

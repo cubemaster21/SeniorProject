@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 public class Audio {
 	public static HashMap<String, Music> musicHash = new HashMap<String, Music>();
@@ -13,8 +14,15 @@ public class Audio {
 	public static Music bgCircus;
 	public static Music bgHalloween;
 	public static Music bgTraining;
+	public static Music bgArctic;
+	public static Music bgSkyscraper;
+	public static Music bgVegas;
+	
+	public static Sound hit;
+	public static Sound click;
 	
 	public static boolean enabled =true;
+	public static boolean effectsEnabled = true;
 	
 	public static Music playing;
 	
@@ -26,6 +34,14 @@ public class Audio {
 			bgCircus = 		createMusic("circusmusic.wav");
 			bgHalloween = 	createMusic("halloweenmusic.wav");
 			bgTraining = 	createMusic("trainingmusic.wav");
+			bgArctic = 		createMusic("arcticmusic.wav");
+			bgSkyscraper = 	createMusic("skyscrapermusic.wav");
+			bgVegas = 		createMusic("vegasmusic.wav");
+			
+			hit = Gdx.audio.newSound(Gdx.files.internal("bounce.wav"));
+			click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
+			
+			
 		} catch(Exception e){
 			System.err.println("Failed to load audio sources.");
 			e.printStackTrace();
@@ -41,6 +57,10 @@ public class Audio {
 		for(Music m: musicHash.values()){
 			m.setVolume(value);
 		}
+	}
+	public static long play(Sound s){
+		if(effectsEnabled) return s.play();
+		return -1;
 	}
 	public static void play(Music m){
 		if(playing != null)

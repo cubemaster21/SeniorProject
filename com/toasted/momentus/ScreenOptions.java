@@ -48,6 +48,17 @@ public class ScreenOptions extends Screen {
 			music.setbuttext("Music Off");
 			music.setimg(nomusicbut);
 		}
+		
+		if(Audio.effectsEnabled){
+			sound.setbuttext("Sound on");
+			sound.setimg(soundbut);
+		} else {
+			sound.setbuttext("sound off");
+			sound.setimg(nosoundbut);
+		}
+		
+		
+		
 		gohome.setimg(homebut);
 		gohome.setbuttext("Main Menu");
 
@@ -73,13 +84,15 @@ public class ScreenOptions extends Screen {
 			}});;
 		sound.setaction(new UIAction(){
 			public void doAction(){
-				if(sound.getimg()== soundbut){
+				if(Audio.effectsEnabled){
 					sound.setimg(nosoundbut);
 					sound.setbuttext("Sound Off");
+					Audio.effectsEnabled = false;
 				}
 				else{
 					sound.setimg(soundbut);
 					sound.setbuttext("Sound On");
+					Audio.effectsEnabled = true;
 				}
 				}});;
 		Audio.play(Audio.menu);

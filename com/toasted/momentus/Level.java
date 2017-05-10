@@ -61,6 +61,7 @@ public class Level {
 				}
 //				platform.getSprite().setColor(Color.GOLD);
 				platform.hit();
+				Audio.play(Audio.hit);
 				int newPoints = (platform.getPropertiesID() == 6 ? 5 : 1);
 				score += newPoints;
 				if(effects != null)

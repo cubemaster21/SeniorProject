@@ -19,7 +19,9 @@ public abstract class Screen implements InputProcessor{
 		for(UIObject uio: uiElements){
 			if(uio.contains(unproj.x, unproj.y)){
 				if(uio instanceof UIButton){
+					
 					((UIButton)uio).onClick();
+					Audio.play(Audio.click);
 				}
 				return true;
 			}
